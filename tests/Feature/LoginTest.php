@@ -9,18 +9,21 @@ class LoginTest extends TestCase
 {
 
     use DatabaseMigrations;
+    /**
+     * Author:Fessy
+     * Created:4/20/2020
+     */
 
 
    public function after_login_can_not_access_home_page_until_verifired(){
 
-   $user = factory(User::class)->create();
-   $this->actingAs($user);
-   $this->get('/home')->assertRedirect('/');
-   }
-   public function after_login_can_access_home_page_if_verifired(){
+   $this->loginInUser();
+   $this->get('/home')->assertRedirect('/verifyOTP');
 
-    $user = factory(User::class)->create(['isVerifed'=>  1]);
-    $this->actingAs($user);
+   }
+
+   public function after_login_can_access_home_page_if_verifired(){
+    $this->loginInUser(['isVerifed'=>  1]);
     $this->get('/home')->assertStatus(200);
 
 

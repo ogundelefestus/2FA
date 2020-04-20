@@ -40,6 +40,11 @@ class LoginController extends Controller
      * @return bool
      */
 
+      /**
+     * Author:Fessy
+     * Created:4/20/2020
+     */
+
     
     protected function attemptLogin(Request $request)
     {
@@ -50,9 +55,7 @@ class LoginController extends Controller
         );
 
         if($result){
-            $OTP=rand(100000, 999999);
-            //dd($OTP)
-            Mail::to('festusogundele9@gmail.com')->send(new OTPMail($OTP));
+           auth()->user()->sendOTP();
         }
         return $result;
     }

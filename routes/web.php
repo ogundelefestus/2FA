@@ -13,12 +13,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+ /**
+     * Author:Fessy
+     * Created:4/20/2020
+     */
+    
 Route::get('/', function () {
     return view('welcome');
 });
 
 Auth::routes();
-
+Route::get('/verifyOTP','VerifyOTPController@showVerifyForm');
 Route::post('/verifyOTP','VerifyOTPController@verify');
 
 //Using TwoFA Middleware

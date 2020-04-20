@@ -16,7 +16,7 @@ class EmailTest extends TestCase
     use DatabaseMigrations;
     public function an_otp_email_is_send_when_user_is_logged_in(){
       Mail::fake();
-      $this->withoutExceptionHandling();
+      //$this->withoutExceptionHandling();
         $user=factory(User::class)->create();
        $res=$this->post('/login',['email'=>$user->email,'password'=>'secret']);
        Mail::assertSent(OTPMail::class);
@@ -26,8 +26,8 @@ class EmailTest extends TestCase
       
 
       Mail::fake();
-      //$this->withoutExceptionHandling();
-        $user=factory(User::class)->create();
+      $this->withExceptionHandling();
+       $user=factory(User::class)->create();
        $res=$this->post('/login',['email'=>$user->email,'password'=>'secretbgg']);
        Mail::assertNotSent(OTPMail::class);
 
@@ -36,9 +36,9 @@ class EmailTest extends TestCase
 
     }
 
-    public function otp_is_stred_in_cache_for_user(){
+    public function otp_is_stored_in_cache_for_the_user(){
       $user=factory(User::class)->create();
-      $res=$this->post('/login',['email'=>$user->email,'password'=>'secretbgg']);
+      $res=$this->post('/login',['email'=>$user->email,'password'=>'secret']);
       $this->assertNotNull($user->OTP());
 
     }
